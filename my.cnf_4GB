@@ -6,13 +6,15 @@
 #Connections: 1000 connections
 ################################################################################
 [mysqld_safe]
+socket                          = /var/run/mysqld/mysqld.sock
 nice 				= -15
 
 [client]
-socket 				= /var/lib/mysql/mysql.sock
+socket         = /var/run/mysqld/mysqld.sock
 default-character-set 		= utf8
 
 [mysqld]
+user         = mysql
 ## Charset and Collation
 character-set-server 		= utf8
 collation-server 		= utf8_general_ci
@@ -22,8 +24,8 @@ back_log 			= 300
 open-files-limit 		= 8192
 open-files 			= 1024	
 port 				= 3306
-socket 				= /var/lib/mysql/mysql.sock
-pid-file 			= /var/lib/mysql/mysql.pid
+socket         = /var/run/mysqld/mysqld.sock
+pid-file       = /var/run/mysqld/mysqld.pid
 skip-external-locking
 skip-name-resolve
 
@@ -31,11 +33,13 @@ skip-name-resolve
 datadir				= /var/lib/mysql
 relay_log			= mysql-relay-bin
 relay_log_index			= mysql-relay-index
-#log				= mysql-gen.log	
-log_error			= mysql-error.err
+#general_log_file          = /var/log/mysql/mysql.log
+#general_log               = 1	
+log_error       = /var/log/mysql/error.log
 log_warnings
 log_bin				= mysql-bin
-log_slow_queries		= mysql-slow.log
+slow_query_log_file    = mysql-slow.log
+slow_query_log      = 1
 #log_queries_not_using_indexes
 long_query_time 		= 10	#default: 10
 max_binlog_size 		= 256M	#max size for binlog before rolling
@@ -167,3 +171,9 @@ transaction-isolation		= REPEATABLE-READ #REPEATABLE-READ req for ACID, SERIALIZ
 quick
 quote-names
 max_allowed_packet 		= 128M
+
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+# 
+!includedir /etc/mysql/conf.d/
