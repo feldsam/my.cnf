@@ -37,11 +37,13 @@ relay_log_index			= mysql-relay-index
 #general_log               = 1	
 log_error       = /var/log/mysql/error.log
 log_warnings
-log_bin				= mysql-bin
-slow_query_log_file    = mysql-slow.log
+log_bin				= /var/log/mysql/mysql-bin.log
+slow_query_log_file    = /var/log/mysql/mariadb-slow.log
 slow_query_log      = 1
 #log_queries_not_using_indexes
 long_query_time 		= 10	#default: 10
+#log_slow_rate_limit    = 1000
+#log_slow_verbosity     = query_plan
 max_binlog_size 		= 256M	#max size for binlog before rolling
 expire_logs_days 		= 4	#binlog files older than this will be purged
 
@@ -115,11 +117,13 @@ thread_cache_size		= 100 #recommend 5% of max_connections
 #binlog_format			= MIXED
 
 ## MyISAM Engine
-key_buffer			= 512K	#global buffer
+key_buffer_size			= 16M	#global buffer
+thread_stack            = 192K
+thread_cache_size       = 8
 myisam_sort_buffer_size		= 128M	#index buffer size for creating/altering indexes
 myisam_max_sort_file_size	= 256M	#max file size for tmp table when creating/alering indexes
 myisam_repair_threads		= 4	#thread quantity when running repairs
-myisam_recover			= BACKUP	#repair mode, recommend BACKUP 
+myisam_recover_options			= BACKUP	#repair mode, recommend BACKUP 
 
 ## InnoDB Plugin Dependent Settings
 #ignore-builtin-innodb
@@ -138,9 +142,10 @@ myisam_recover			= BACKUP	#repair mode, recommend BACKUP
 ## InnoDB Plugin Independent Settings
 innodb_data_home_dir            = /var/lib/mysql
 innodb_data_file_path		= ibdata1:128M;ibdata2:10M:autoextend
-innodb_log_file_size		= 128M	#64G_RAM+ = 768, 24G_RAM+ = 512, 8G_RAM+ = 256, 2G_RAM+ = 128 
+innodb_log_file_size		= 192M	# innodb_log_file_size * innodb_log_files_in_group == innodb_buffer_pool_size/4
 innodb_log_files_in_group	= 4	#combined size of all logs <4GB. <2G_RAM = 2, >2G_RAM = 4
-innodb_buffer_pool_size		= 2G 	#global buffer
+innodb_buffer_pool_size		= 3G 	#global buffer
+innodb_buffer_pool_instances    = 3 # one instance per 1GB of innodb_buffer_pool_size, for big pool (>8GB) per 2GB
 innodb_additional_mem_pool_size	= 4M	#global buffer
 innodb_status_file		  	#extra reporting
 innodb_file_per_table			#enable always
