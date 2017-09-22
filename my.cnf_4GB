@@ -21,8 +21,7 @@ collation-server 		= utf8_general_ci
 
 ## Files
 back_log 			= 300
-open-files-limit 		= 8192
-open-files 			= 1024	
+open_files_limit 		= 8192
 port 				= 3306
 socket         = /var/run/mysqld/mysqld.sock
 pid-file       = /var/run/mysqld/mysqld.pid
@@ -81,7 +80,6 @@ tmp_table_size                  = 1G    #recommend 1G min
 #table_open_cache		= 512	#5.1.x, 5.5.x <default: 64>
 
 ## Thread settings
-thread_concurrency		= 16  #recommend 2x CPU cores
 thread_cache_size		= 100 #recommend 5% of max_connections
 
 ## Replication
