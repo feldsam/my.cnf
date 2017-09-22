@@ -146,7 +146,6 @@ innodb_log_file_size		= 192M	# innodb_log_file_size * innodb_log_files_in_group 
 innodb_log_files_in_group	= 4	#combined size of all logs <4GB. <2G_RAM = 2, >2G_RAM = 4
 innodb_buffer_pool_size		= 3G 	#global buffer
 innodb_buffer_pool_instances    = 3 # one instance per 1GB of innodb_buffer_pool_size, for big pool (>8GB) per 2GB
-innodb_additional_mem_pool_size	= 4M	#global buffer
 innodb_status_file		  	#extra reporting
 innodb_file_per_table			#enable always
 innodb_flush_log_at_trx_commit	= 2	#2/0 = perf, 1 = ACID
