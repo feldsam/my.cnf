@@ -60,7 +60,7 @@ query_cache_size 		= 32M	#global buffer
 query_cache_limit 		= 512K	#max query result size to put in cache
 
 ## Connections
-max_connections 		= 1000	#multiplier for memory usage via per-thread buffers
+max_connections 		= 200	#multiplier for memory usage via per-thread buffers
 max_connect_errors 		= 100	#default: 10
 concurrent_insert		= 2	#default: 1, 2: enable insert for all instances
 connect_timeout			= 30	#default -5.1.22: 5, +5.1.22: 10
@@ -80,7 +80,7 @@ tmp_table_size                  = 1G    #recommend 1G min
 #table_open_cache		= 512	#5.1.x, 5.5.x <default: 64>
 
 ## Thread settings
-thread_cache_size		= 100 #recommend 5% of max_connections
+thread_cache_size		= 20 #recomended to match real connections initiaded by apps
 
 ## Replication
 #read_only
